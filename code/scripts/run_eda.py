@@ -47,10 +47,10 @@ def load_split(path: Path, split: str):
     del coco  # free memory
 
     # Objects (iscrowd = 0)
-    extra = [c for c in ("occlusion", "truncation") if c in anns.columns]
+    extra = [c for c in ("occlusion", "truncation", "track_id") if c in anns.columns]
     objs = anns.loc[anns["iscrowd"] == 0, ["image_id", "category_id", "bbox"] + extra].copy()
     bbox = np.array(objs["bbox"].tolist(), dtype=float)
-    objs["w"], objs["h"] = bbox[:, 2], bbox[:, 3]
+    objs["x"], objs["y"], objs["w"], objs["h"] = bbox[:, 0], bbox[:, 1], bbox[:, 2], bbox[:, 3]
     objs["sqrt_area"] = np.sqrt(objs["w"] * objs["h"])
     objs["cls"] = objs["category_id"] - 1
     objs = objs.drop(columns=["bbox", "category_id"]).merge(imgs, on="image_id")
