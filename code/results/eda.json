@@ -1,0 +1,181 @@
+{
+  "train": {
+    "clips": 56,
+    "frames": 24201,
+    "objects": 1105516,
+    "objects_per_frame": {
+      "mean": 45.7,
+      "median": 43.0,
+      "max": 180
+    },
+    "size_px": {
+      "median": 45.8,
+      "small_%": 24.91,
+      "medium_%": 63.5,
+      "large_%": 11.59
+    },
+    "class_share_%": {
+      "person": 29.73,
+      "bicycle": 3.64,
+      "car": 45.71,
+      "van": 4.25,
+      "truck": 2.76,
+      "tricycle": 3.74,
+      "bus": 0.87,
+      "motor": 9.3
+    },
+    "resolutions_by_clip": {
+      "1904x1071": 30,
+      "1344x756": 11,
+      "2688x1512": 11,
+      "2720x1530": 2,
+      "1920x1080": 1,
+      "1360x765": 1
+    },
+    "frames_with_ignore_%": 74.75,
+    "ignored_area_mean_%": 2.41,
+    "occlusion_%": {
+      "0.0": 54.3,
+      "1.0": 40.3,
+      "2.0": 5.3
+    }
+  },
+  "val": {
+    "clips": 7,
+    "frames": 2846,
+    "objects": 114132,
+    "objects_per_frame": {
+      "mean": 40.1,
+      "median": 37.0,
+      "max": 116
+    },
+    "size_px": {
+      "median": 52.4,
+      "small_%": 19.2,
+      "medium_%": 69.53,
+      "large_%": 11.27
+    },
+    "class_share_%": {
+      "person": 44.08,
+      "bicycle": 5.28,
+      "car": 27.88,
+      "van": 5.99,
+      "truck": 1.19,
+      "tricycle": 4.81,
+      "bus": 0.23,
+      "motor": 10.54
+    },
+    "resolutions_by_clip": {
+      "1344x756": 2,
+      "1904x1071": 2,
+      "2720x1530": 1,
+      "2688x1512": 1,
+      "3840x2160": 1
+    },
+    "frames_with_ignore_%": 50.39,
+    "ignored_area_mean_%": 1.62,
+    "occlusion_%": {
+      "0.0": 40.9,
+      "1.0": 52.4,
+      "2.0": 6.6
+    }
+  },
+  "per_class_train": {
+    "person": {
+      "count": 328701,
+      "median_px": 35.8,
+      "median_w": 25.0,
+      "median_h": 50.0,
+      "share_%": 29.7,
+      "small_%": 39.5
+    },
+    "bicycle": {
+      "count": 40255,
+      "median_px": 41.4,
+      "median_w": 43.0,
+      "median_h": 43.0,
+      "share_%": 3.6,
+      "small_%": 24.4
+    },
+    "car": {
+      "count": 505301,
+      "median_px": 57.0,
+      "median_w": 67.0,
+      "median_h": 48.0,
+      "share_%": 45.7,
+      "small_%": 16.3
+    },
+    "van": {
+      "count": 46940,
+      "median_px": 49.8,
+      "median_w": 55.0,
+      "median_h": 46.0,
+      "share_%": 4.2,
+      "small_%": 21.4
+    },
+    "truck": {
+      "count": 30498,
+      "median_px": 73.5,
+      "median_w": 79.0,
+      "median_h": 68.0,
+      "share_%": 2.8,
+      "small_%": 9.4
+    },
+    "tricycle": {
+      "count": 41349,
+      "median_px": 54.9,
+      "median_w": 59.0,
+      "median_h": 51.0,
+      "share_%": 3.7,
+      "small_%": 21.0
+    },
+    "bus": {
+      "count": 9653,
+      "median_px": 113.4,
+      "median_w": 121.0,
+      "median_h": 103.0,
+      "share_%": 0.9,
+      "small_%": 4.1
+    },
+    "motor": {
+      "count": 102819,
+      "median_px": 40.2,
+      "median_w": 38.0,
+      "median_h": 43.0,
+      "share_%": 9.3,
+      "small_%": 30.4
+    }
+  },
+  "resize": [
+    {
+      "imgsz": 640,
+      "below_8px_%": 9.74,
+      "below_16px_%": 53.63,
+      "median_px": 15.3
+    },
+    {
+      "imgsz": 960,
+      "below_8px_%": 1.77,
+      "below_16px_%": 23.53,
+      "median_px": 22.9
+    },
+    {
+      "imgsz": 1024,
+      "below_8px_%": 1.41,
+      "below_16px_%": 19.88,
+      "median_px": 24.5
+    },
+    {
+      "imgsz": 1280,
+      "below_8px_%": 0.61,
+      "below_16px_%": 9.74,
+      "median_px": 30.6
+    },
+    {
+      "imgsz": 1536,
+      "below_8px_%": 0.19,
+      "below_16px_%": 4.75,
+      "median_px": 36.7
+    }
+  ]
+}
