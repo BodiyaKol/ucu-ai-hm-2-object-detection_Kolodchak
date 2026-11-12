@@ -1,5 +1,5 @@
 # experiment: retinanet/kmeans_anchors
-_base_: base.yaml
+base: base.yaml
 # TODO: paste anchor sizes / ratios from M1 k-means
 model:
   anchor_sizes: []

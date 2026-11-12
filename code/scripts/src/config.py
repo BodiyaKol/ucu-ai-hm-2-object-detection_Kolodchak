@@ -20,11 +20,22 @@ def is_kaggle() -> bool:
     return KAGGLE_INPUT.exists()
 
 
+def _deep_merge(base: dict, override: dict) -> dict:
+    """Recursively merge override into base: nested dicts are merged, other values replaced."""
+    out = dict(base)
+    for key, value in override.items():
+        if isinstance(value, dict) and isinstance(out.get(key), dict):
+            out[key] = _deep_merge(out[key], value)
+        else:
+            out[key] = value
+    return out
+
+
 def load_config(path) -> dict:
     """Load a YAML config.
 
-    If the file contains `base: other.yaml`, the base file is loaded first
-    and values from this file override it (shallow merge).
+    If the file contains `base: other.yaml` (path relative to this file), the base
+    is loaded first and this file's values override it (deep merge).
     """
     path = Path(path)
     if not path.is_absolute():
@@ -34,9 +45,7 @@ def load_config(path) -> dict:
 
     base = cfg.pop("base", None)
     if base is not None:
-        merged = load_config(path.parent / base)
-        merged.update(cfg)
-        cfg = merged
+        cfg = _deep_merge(load_config(path.parent / base), cfg)
     return cfg
 
 

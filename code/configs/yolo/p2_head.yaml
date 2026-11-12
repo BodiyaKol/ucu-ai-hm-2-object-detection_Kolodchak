@@ -1,5 +1,5 @@
 # experiment: yolo/p2_head
-_base_: base.yaml
+base: base.yaml
 # TODO: P2 head model yaml (e.g. yolov8s-p2.yaml)
 model:
   weights: yolov8s-p2.yaml

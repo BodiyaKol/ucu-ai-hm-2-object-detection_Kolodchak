@@ -25,3 +25,15 @@ def test_seed_reproducible():
     set_seed(0)
     b = np.random.rand(3)
     assert np.allclose(a, b)
+
+def test_nested_merge(tmp_path):
+    (tmp_path / "base.yaml").write_text("model:\n  name: frcnn\n  lr: 0.01\n")
+    (tmp_path / "child.yaml").write_text("base: base.yaml\nmodel:\n  lr: 0.02\n")
+    assert load_config(tmp_path / "child.yaml") == {"model": {"name": "frcnn", "lr": 0.02}}
+
+
+def test_experiment_configs_inherit_base():
+    # every child config must keep the model fields of its base.yaml
+    for child in ("faster_rcnn/giou.yaml", "retinanet/focal_g3.yaml", "yolo/img1280.yaml"):
+        cfg = load_config(f"configs/{child}")
+        assert "name" in cfg["model"] or "weights" in cfg["model"], child

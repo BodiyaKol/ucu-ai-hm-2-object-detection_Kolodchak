@@ -5,7 +5,6 @@ seed: 42
 competition: multiple-object-video-detection-hw-2-ucu-ai-2026
 local_dataset: mini            # "mini" for CPU debugging, "full" for the full local copy
 data_dirs:
-  full: data/full
   mini: data/mini
   annotations: data/annotations
 num_classes: 8

@@ -1,5 +1,5 @@
 # experiment: faster_rcnn/rpn_2000
-_base_: base.yaml
+base: base.yaml
 # TODO: describe what is changed vs base
 model:
   rpn_post_nms_top_n_train: 2000
