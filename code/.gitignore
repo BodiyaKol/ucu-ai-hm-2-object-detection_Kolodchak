@@ -1,0 +1,19 @@
+# Data and large artifacts (never commit)
+data/
+outputs/
+wandb/
+*.pt
+*.pth
+*.zip
+
+# Secrets
+kaggle.json
+access_token
+.env
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/

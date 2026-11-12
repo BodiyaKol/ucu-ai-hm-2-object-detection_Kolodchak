@@ -1,0 +1,7 @@
+# experiment: yolo/base
+model:
+  weights: yolov8s.pt   # TODO: choose version/size
+
+train:
+  imgsz: 640
+  # any extra ultralytics train() kwargs go here

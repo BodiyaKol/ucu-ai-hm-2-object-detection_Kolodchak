@@ -1,0 +1,7 @@
+# experiment: rtdetr/base
+model:
+  weights: rtdetr-l.pt
+  num_queries: 300
+
+optim:
+  backbone_lr_mult: 0.1   # TODO

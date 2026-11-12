@@ -1,0 +1,5 @@
+# experiment: faster_rcnn/giou
+_base_: base.yaml
+# TODO: GIoU box regression loss
+model:
+  box_loss: giou

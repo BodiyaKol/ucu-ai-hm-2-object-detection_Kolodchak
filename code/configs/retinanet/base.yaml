@@ -1,0 +1,12 @@
+# experiment: retinanet/base
+model:
+  name: retinanet_resnet50_fpn_v2
+  pretrained: true
+  focal_alpha: 0.25
+  focal_gamma: 2.0
+  fg_iou_thresh: 0.5
+  bg_iou_thresh: 0.4
+
+optim:
+  name: sgd
+  lr: 0.01

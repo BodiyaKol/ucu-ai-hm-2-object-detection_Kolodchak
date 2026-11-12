@@ -1,0 +1,12 @@
+# experiment: faster_rcnn/base
+model:
+  name: fasterrcnn_resnet50_fpn_v2
+  pretrained: true
+  rpn_post_nms_top_n_train: 2000
+  box_batch_size_per_image: 512
+
+optim:
+  name: sgd
+  lr: 0.01
+  momentum: 0.9
+  weight_decay: 0.0001

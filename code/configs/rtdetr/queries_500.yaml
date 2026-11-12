@@ -1,0 +1,4 @@
+# experiment: rtdetr/queries_500
+_base_: base.yaml
+model:
+  num_queries: 500

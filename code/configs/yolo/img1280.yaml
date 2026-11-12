@@ -1,0 +1,4 @@
+# experiment: yolo/img1280
+_base_: base.yaml
+train:
+  imgsz: 1280

@@ -1,0 +1,23 @@
+# Shared protocol for ALL experiments (kept fixed across model families).
+seed: 42
+
+# Data
+competition: multiple-object-video-detection-hw-2-ucu-ai-2026
+local_dataset: mini            # "mini" for CPU debugging, "full" for the full local copy
+data_dirs:
+  full: data/full
+  mini: data/mini
+  annotations: data/annotations
+num_classes: 8
+class_names: [person, bicycle, car, van, truck, tricycle, bus, motor]
+
+# Split by sequence: train/ clips for training, the 7 val/ clips as hold-out
+train_split: train
+val_split: val
+
+# Sampling and input size (tentative, revisited after EDA in M1)
+frame_step: 5                  # use every 5th training frame; neighbours are near-duplicates
+imgsz: 1024
+
+# Training budget (same for every model family)
+max_epochs: 30
