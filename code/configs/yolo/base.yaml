@@ -3,5 +3,4 @@ model:
   weights: yolov8s.pt   # TODO: choose version/size
 
 train:
-  imgsz: 640
-  # any extra ultralytics train() kwargs go here
+  imgsz: 1024   # must equal protocol imgsz; img1280.yaml overrides it for the resolution experiment

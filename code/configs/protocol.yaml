@@ -1,22 +1,43 @@
-# Shared protocol for ALL experiments (kept fixed across model families).
+# Shared protocol for ALL experiments (kept fixed across model families M3-M6).
+# Every value below is justified by results/eda.json and results/eda_choices.json (M1.2-M1.3).
 seed: 42
 
-# Data
+# ---------------------------------------------------------------- data
 competition: multiple-object-video-detection-hw-2-ucu-ai-2026
-local_dataset: mini            # "mini" for CPU debugging, "full" for the full local copy
+local_dataset: mini            # local CPU debugging uses data/mini (exact copy of competition layout)
 data_dirs:
   mini: data/mini
   annotations: data/annotations
 num_classes: 8
 class_names: [person, bicycle, car, van, truck, tricycle, bus, motor]
 
-# Split by sequence: train/ clips for training, the 7 val/ clips as hold-out
-train_split: train
-val_split: val
+# ---------------------------------------------------------------- split (by sequence, no frame-level leakage)
+train_split: train             # 56 clips
+val_split: val                 # 7 clips, fixed hold-out for all experiments
 
-# Sampling and input size (tentative, revisited after EDA in M1)
-frame_step: 5                  # use every 5th training frame; neighbours are near-duplicates
+# ---------------------------------------------------------------- sampling
+# Consecutive frames are near-duplicates: at step 1 only 0.45% of objects are new and the same
+# object keeps IoU 0.85; at step 10, 4.2% are new and only 39% of boxes keep IoU > 0.5.
+# Step 10 -> ~2,420 train frames: fits the GPU budget for tuning 4 detector families.
+# Step 5 (~4,840 frames) is tested later as a data-strategy experiment (M7).
+frame_step: 10
+val_frame_step: 1              # evaluate on ALL val frames (test is also scored on every frame)
+
+# ---------------------------------------------------------------- input size
+# imgsz = longest image side after resizing (aspect ratio kept).
+# Objects below 16 px after resize: 54% at 640, 20% at 1024, 10% at 1280.
+# Test median longest side is 1360 (train 1904): 1280 is tested as a tuning step (M5, M7).
 imgsz: 1024
 
-# Training budget (same for every model family)
-max_epochs: 30
+# ---------------------------------------------------------------- ignored regions
+# Masked (filled) in training images; added to evaluation GT as iscrowd=1, once per class (organisers' format).
+ignore_fill: 114               # gray value used to paint ignored regions (Ultralytics letterbox colour)
+
+# ---------------------------------------------------------------- evaluation (same for every model)
+eval:
+  metric: coco                 # pycocotools: mAP@[.5:.95], AP50, AP_small/medium/large
+  max_dets: 500                # competition scores at most 500 detections per image
+  score_thresh: 0.001          # keep low-confidence boxes: they raise recall at no mAP cost
+
+# ---------------------------------------------------------------- training budget
+max_epochs: 30                 # upper bound; per-family schedules are fixed in M3 and kept comparable
