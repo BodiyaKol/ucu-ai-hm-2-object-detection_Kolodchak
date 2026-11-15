@@ -40,6 +40,27 @@ def to_coco_results(image_id, boxes_xyxy, scores, classes) -> list[dict]:
             for box, s, c in zip(xyxy_to_coco(boxes_xyxy), scores, classes)]
 
 
+def _load_results(coco_gt: COCO, preds: list[dict]) -> COCO:
+    """Light replacement of COCO.loadRes for bbox results.
+
+    loadRes also adds a polygon per detection (never used for bbox eval), which roughly doubles
+    RAM for ~1.4M val detections and killed the first Kaggle run.
+    """
+    img_ids = set(coco_gt.getImgIds())
+    anns = []
+    for i, d in enumerate(preds, start=1):
+        if d["image_id"] not in img_ids:
+            raise ValueError(f"prediction for unknown image_id {d['image_id']}")
+        w, h = d["bbox"][2], d["bbox"][3]
+        anns.append({"id": i, "image_id": d["image_id"], "category_id": d["category_id"],
+                     "bbox": d["bbox"], "score": d["score"], "area": w * h, "iscrowd": 0})
+    coco_dt = COCO()
+    coco_dt.dataset = {"images": coco_gt.dataset["images"], "categories": coco_gt.dataset["categories"],
+                       "annotations": anns}
+    coco_dt.createIndex()
+    return coco_dt
+
+
 def coco_evaluate(gt, preds, max_dets: int = 500, verbose: bool = False) -> dict:
     """Return mAP, AP50, AP75, AP_small/medium/large and per_class_AP, all at `max_dets` per image.
 
@@ -57,7 +78,7 @@ def coco_evaluate(gt, preds, max_dets: int = 500, verbose: bool = False) -> dict
         coco_gt = COCO()
         coco_gt.dataset = {"info": {}, "licenses": [], **gt}
         coco_gt.createIndex()
-        coco_dt = coco_gt.loadRes(preds)
+        coco_dt = _load_results(coco_gt, preds)
         ev = COCOeval(coco_gt, coco_dt, iouType="bbox")
         ev.params.maxDets = [1, 100, max_dets]  # default is 100: too few for ~46 objects/frame (max 180)
         ev.evaluate()
