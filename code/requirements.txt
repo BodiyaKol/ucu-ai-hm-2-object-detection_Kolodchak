@@ -1,9 +1,18 @@
+# Local environment (CPU). Kaggle kernels keep their preinstalled CUDA torch
+# and only `pip install ultralytics pycocotools` (see notebooks/*/run.py).
+--extra-index-url https://download.pytorch.org/whl/cpu
+
 kaggle==2.2.5
 matplotlib==3.11.2
 numpy==2.5.4
-opencv-python-headless==5.0.0.93
+opencv-python==5.0.0.93
 pandas==3.1.1
 pycocotools==2.0.11
 pytest==9.2.0
 PyYAML==6.0.3
 tqdm==4.70.1
+
+# models (M2.3+): CPU build of torch locally; pinned after the first install
+torch==2.15.0+cpu
+torchvision==0.29.2+cpu
+ultralytics==8.4.214

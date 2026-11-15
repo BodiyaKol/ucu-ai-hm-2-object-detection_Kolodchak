@@ -37,3 +37,14 @@ def test_detection_in_ignore_region_is_not_fp():
 
 def test_empty_predictions():
     assert coco_evaluate(_gt([]), [])["mAP"] == 0.0
+
+
+def test_map_uses_500_dets_not_100():
+    # 150 objects in one frame (dense like VisDrone); with top-100 only, mAP would be ~0.67
+    boxes = [[40 * i, 40 * j, 40 * i + 20, 40 * j + 20] for i in range(15) for j in range(10)]
+    entry = {"file_name": "images/clip/0000001.jpg", "width": 640, "height": 480,
+             "video": "clip", "frame_id": 1, "classes": np.full(150, 2),
+             "boxes": np.array(boxes, float), "ignore": np.zeros((0, 4))}
+    gt = build_coco([entry], CLASSES)
+    preds = to_coco_results(1, boxes, np.linspace(0.9, 0.5, 150), [2] * 150)
+    assert coco_evaluate(gt, preds)["mAP"] == pytest.approx(1.0)

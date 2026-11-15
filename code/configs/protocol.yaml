@@ -40,4 +40,4 @@ eval:
   score_thresh: 0.001          # keep low-confidence boxes: they raise recall at no mAP cost
 
 # ---------------------------------------------------------------- training budget
-max_epochs: 30                 # upper bound; per-family schedules are fixed in M3 and kept comparable
+max_epochs: 12                 # upper bound; per-family schedules are fixed in M3 and kept comparable

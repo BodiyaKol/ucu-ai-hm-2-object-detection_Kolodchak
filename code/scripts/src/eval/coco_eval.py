@@ -14,7 +14,6 @@ from pycocotools.cocoeval import COCOeval
 
 from src.data.convert import xyxy_to_coco
 
-# Order of the first 6 values of COCOeval.stats (all computed at maxDets[2]).
 STAT_NAMES = ["mAP", "AP50", "AP75", "AP_small", "AP_medium", "AP_large"]
 
 
@@ -24,6 +23,12 @@ def _load(obj):
         with open(obj) as fh:
             return json.load(fh)
     return obj
+
+
+def _mean(p) -> float:
+    """Mean over valid entries (-1 = no GT), same rule as COCOeval.summarize; -1 if nothing valid."""
+    p = p[p > -1]
+    return float(p.mean()) if p.size else -1.0
 
 
 def to_coco_results(image_id, boxes_xyxy, scores, classes) -> list[dict]:
@@ -36,7 +41,7 @@ def to_coco_results(image_id, boxes_xyxy, scores, classes) -> list[dict]:
 
 
 def coco_evaluate(gt, preds, max_dets: int = 500, verbose: bool = False) -> dict:
-    """Return mAP, AP50, AP75, AP_small/medium/large and per_class_AP.
+    """Return mAP, AP50, AP75, AP_small/medium/large and per_class_AP, all at `max_dets` per image.
 
     gt: COCO GT dict or json path. preds: COCO results list or json path.
     A value of -1 means "no GT in this size range" (COCO convention);
@@ -61,13 +66,16 @@ def coco_evaluate(gt, preds, max_dets: int = 500, verbose: bool = False) -> dict
     if verbose:
         print(log.getvalue())
 
-    metrics = {k: float(v) for k, v in zip(STAT_NAMES, ev.stats[:6])}
-    # precision shape: [IoU thr, recall, class, area range, maxDets]; area 0 = all, maxDets -1 = max_dets
-    prec = ev.eval["precision"][:, :, :, 0, -1]
+    # NOTE: COCOeval.stats[0] is hard-coded to maxDets=100, so all numbers are computed here
+    # from the precision array at maxDets[-1] = max_dets.
+    # precision shape: [IoU thr (0.50:0.95), recall, class, area (all, small, medium, large), maxDets]
+    p = ev.eval["precision"][..., -1]
+    metrics = {"mAP": _mean(p[:, :, :, 0]), "AP50": _mean(p[0, :, :, 0]), "AP75": _mean(p[5, :, :, 0]),
+               "AP_small": _mean(p[:, :, :, 1]), "AP_medium": _mean(p[:, :, :, 2]),
+               "AP_large": _mean(p[:, :, :, 3])}
     per_class = {}
     for k, cat_id in enumerate(ev.params.catIds):
-        p = prec[:, :, k]
-        p = p[p > -1]
-        per_class[names[cat_id]] = float(p.mean()) if p.size else None
+        ap = _mean(p[:, :, k, 0])
+        per_class[names[cat_id]] = ap if ap > -1 else None
     metrics["per_class_AP"] = per_class
     return metrics

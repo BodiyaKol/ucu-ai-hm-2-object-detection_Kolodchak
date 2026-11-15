@@ -1,6 +1,17 @@
-# experiment: yolo/base
+# experiment: yolo/base — M2.3 baseline (also the starting point for M5)
 model:
-  weights: yolov8s.pt   # TODO: choose version/size
+  weights: yolo11s.pt   # COCO-pretrained, small; versions/sizes are compared in M5
 
 train:
   imgsz: 1024   # must equal protocol imgsz; img1280.yaml overrides it for the resolution experiment
+  epochs: 10    # baseline budget (~1 GPU hour on T4), not tuned
+  batch: 8
+  workers: 4
+  close_mosaic: 2   # Ultralytics default 10 would disable mosaic for ALL 10 epochs
+
+# overrides for the local CPU dry-run (--mini): only checks that the whole chain runs
+mini:
+  imgsz: 320
+  epochs: 1
+  batch: 2
+  workers: 0
