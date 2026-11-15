@@ -85,3 +85,32 @@ def read_ignore(path) -> np.ndarray:
     if not path.exists() or path.stat().st_size == 0:
         return np.zeros((0, 4))
     return np.loadtxt(path, ndmin=2)[:, :4]
+
+def _coco_ann(ann_id: int, image_id: int, category_id: int, box, iscrowd: int) -> dict:
+    """One COCO annotation from a top-left (x, y, w, h) box."""
+    x, y, w, h = (round(float(v), 2) for v in box)
+    return {"id": ann_id, "image_id": image_id, "category_id": category_id,
+            "bbox": [x, y, w, h], "area": round(w * h, 2), "iscrowd": iscrowd}
+
+
+def build_coco(entries: list[dict], class_names: list[str]) -> dict:
+    """Build a COCO dict from frame entries.
+
+    Each entry: file_name, width, height, video, frame_id,
+                classes (N,) 0-based, boxes (N, 4) pixel xyxy, ignore (M, 4) pixel xyxy.
+    Objects get category_id = class + 1 (COCO is 1-based).
+    Ignored regions are added as iscrowd=1 once per class, the same scheme as the organisers,
+    so pycocotools ignores detections of ANY class inside them.
+    """
+    images, anns = [], []
+    for image_id, e in enumerate(entries, start=1):
+        images.append({"id": image_id, "file_name": e["file_name"],
+                       "width": int(e["width"]), "height": int(e["height"]),
+                       "video": e["video"], "frame_id": int(e["frame_id"])})
+        for cls, box in zip(e["classes"], xyxy_to_coco(e["boxes"])):
+            anns.append(_coco_ann(len(anns) + 1, image_id, int(cls) + 1, box, 0))
+        for box in xyxy_to_coco(e["ignore"]):
+            for cls in range(len(class_names)):
+                anns.append(_coco_ann(len(anns) + 1, image_id, cls + 1, box, 1))
+    categories = [{"id": i + 1, "name": n} for i, n in enumerate(class_names)]
+    return {"images": images, "annotations": anns, "categories": categories}
