@@ -50,27 +50,26 @@ def find_prepared(arg) -> Path:
     return prepared
 
 
-def predict(model, paths, ids, chunk: int, **kw):
+def predict(model, paths, ids, list_file: Path, **kw):
     """Run the detector; return COCO results (ids[i] belongs to paths[i]) and images/s.
 
-    Images go through model.predict in chunks with gc.collect() in between, and raw outputs are
-    kept as small numpy arrays (COCO dicts are built only at the end). In the first Kaggle runs RAM
-    grew by about one decoded image per frame (Results objects keep the original image) until the
-    process was killed at 32 GB.
+    Paths are passed through a .txt file: Ultralytics then reads the images lazily, one per batch
+    (LoadImagesAndVideos). A Python LIST of paths is instead decoded completely into RAM and run as
+    ONE batch (check_source -> autocast_list -> LoadPilAndNumpy). That caused the RAM kill (all val
+    frames at once), the CUDA OOM (250-image batch) and predictions that depended on the list length
+    (letterbox to a common shape when image sizes in the batch differ).
     """
+    list_file.write_text("\n".join(str(Path(p).absolute()) for p in paths) + "\n")
     raw, t0 = [], time.time()
-    for n, start in enumerate(range(0, len(paths), chunk)):
-        part = [str(p) for p in paths[start:start + chunk]]
-        for path, r in zip(part, model.predict(part, stream=True, verbose=False, **kw)):
-            assert Path(r.path).name == Path(path).name, "prediction order mismatch"
-            b = r.boxes
-            raw.append((b.xyxy.cpu().numpy(), b.conf.cpu().numpy(), b.cls.cpu().numpy().astype(int)))
-            del r, b
-        gc.collect()
-        if n % 2 == 0:
-            log_mem(f"predict {start + len(part)}/{len(paths)} images")
+    results = model.predict(str(list_file), stream=True, verbose=False, batch=1, **kw)
+    for i, (path, r) in enumerate(zip(paths, results)):
+        assert Path(r.path).name == Path(path).name, "prediction order mismatch"
+        b = r.boxes
+        raw.append((b.xyxy.cpu().numpy(), b.conf.cpu().numpy(), b.cls.cpu().numpy().astype(int)))
+        if (i + 1) % 500 == 0:
+            log_mem(f"predict {i + 1}/{len(paths)} images")
     fps = len(paths) / (time.time() - t0)
-    preds = []
+    preds = []  # COCO dicts are built only after all images are done
     for image_id, (boxes, scores, classes) in zip(ids, raw):
         preds += to_coco_results(image_id, boxes, scores, classes)
     return preds, fps
@@ -122,14 +121,14 @@ def main():
 
     model = YOLO(weights)
     kw = dict(imgsz=tr["imgsz"], conf=cfg["eval"]["score_thresh"], max_det=cfg["eval"]["max_dets"],
-            device=device, chunk=8 if args.mini else 250)
+              device=device)
     if device != "cpu":
         kw["quantize"] = 16  # FP16 inference on GPU (Ultralytics 8.4 name for the old `half`)
 
     # ---- val: our COCO evaluator (ignore regions = iscrowd)
     gt = json.load(open(prepared / "annotations/val_coco.json"))
     val_paths = [root / cfg["val_split"] / img["file_name"] for img in gt["images"]]
-    val_preds, val_fps = predict(model, val_paths, [img["id"] for img in gt["images"]], **kw)
+    val_preds, val_fps = predict(model, val_paths, [img["id"] for img in gt["images"]], out / "val_list.txt", **kw)
     log_mem(f"after val predict ({len(val_preds)} detections)")
     json.dump(val_preds, open(out / "val_preds.json", "w"))  # kept for failure analysis later
     metrics = coco_evaluate(gt, val_preds, max_dets=cfg["eval"]["max_dets"], verbose=True)
@@ -143,7 +142,8 @@ def main():
     rows = [r for r in rows if (root / r["file_name"]).exists()]  # mini has only a few test clips
     if is_kaggle():
         assert len(rows) == 3811, f"expected 3811 test images, found {len(rows)}"
-    test_preds, _ = predict(model, [root / r["file_name"] for r in rows], [r["image_id"] for r in rows], **kw)
+    test_preds, _ = predict(model, [root / r["file_name"] for r in rows], [r["image_id"] for r in rows],
+                            out / "test_list.txt", **kw)
     log_mem(f"after test predict ({len(test_preds)} detections)")
     predictions_to_csv(test_preds, test_csv, out / "submission.csv")
     sub_stats = check_submission(out / "submission.csv", test_csv)
