@@ -50,16 +50,31 @@ def find_prepared(arg) -> Path:
     return prepared
 
 
-def predict(model, paths, ids, **kw):
-    """Run the detector on images; return COCO results (ids[i] belongs to paths[i]) and images/s."""
-    preds, t0 = [], time.time()
-    results = model.predict([str(p) for p in paths], stream=True, verbose=False, **kw)
-    for path, image_id, r in zip(paths, ids, results):
-        assert Path(r.path).name == Path(path).name, "prediction order mismatch"
-        b = r.boxes
-        preds += to_coco_results(image_id, b.xyxy.cpu().numpy(), b.conf.cpu().numpy(),
-                                 b.cls.cpu().numpy().astype(int))
-    return preds, len(paths) / (time.time() - t0)
+def predict(model, paths, ids, chunk: int, **kw):
+    """Run the detector; return COCO results (ids[i] belongs to paths[i]) and images/s.
+
+    Images go through model.predict in chunks with gc.collect() in between, and raw outputs are
+    kept as small numpy arrays (COCO dicts are built only at the end). In the first Kaggle runs RAM
+    grew by about one decoded image per frame (Results objects keep the original image) until the
+    process was killed at 32 GB.
+    """
+    raw, t0 = [], time.time()
+    for n, start in enumerate(range(0, len(paths), chunk)):
+        part = [str(p) for p in paths[start:start + chunk]]
+        for path, r in zip(part, model.predict(part, stream=True, verbose=False, **kw)):
+            assert Path(r.path).name == Path(path).name, "prediction order mismatch"
+            b = r.boxes
+            raw.append((b.xyxy.cpu().numpy(), b.conf.cpu().numpy(), b.cls.cpu().numpy().astype(int)))
+            del r, b
+        gc.collect()
+        if n % 2 == 0:
+            log_mem(f"predict {start + len(part)}/{len(paths)} images")
+    fps = len(paths) / (time.time() - t0)
+    preds = []
+    for image_id, (boxes, scores, classes) in zip(ids, raw):
+        preds += to_coco_results(image_id, boxes, scores, classes)
+    return preds, fps
+
 
 
 def main():
@@ -107,7 +122,7 @@ def main():
 
     model = YOLO(weights)
     kw = dict(imgsz=tr["imgsz"], conf=cfg["eval"]["score_thresh"], max_det=cfg["eval"]["max_dets"],
-              device=device)
+            device=device, chunk=8 if args.mini else 250)
     if device != "cpu":
         kw["quantize"] = 16  # FP16 inference on GPU (Ultralytics 8.4 name for the old `half`)
 
