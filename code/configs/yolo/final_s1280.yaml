@@ -1,0 +1,10 @@
+# experiment: M7 final A — YOLO11s at 1280 (small objects + test resolution), longer training
+base: base.yaml
+train:
+  imgsz: 1280      # <16 px objects: 19.9% at 1024 -> 9.7% at 1280; test median longest side 1360
+  epochs: 40       # upper bound; `time` decides the real number of epochs
+  batch: 8
+  close_mosaic: 5
+  time: 1.5        # hours: Ultralytics fits epochs + LR schedule into this budget (deadline safety)
+mini:
+  time: null       # no time cap on the CPU dry-run

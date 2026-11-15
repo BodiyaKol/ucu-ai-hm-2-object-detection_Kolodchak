@@ -1,0 +1,12 @@
+# experiment: M7 final B — YOLO11m (more capacity) at the protocol imgsz
+base: base.yaml
+model:
+  weights: yolo11m.pt
+train:
+  imgsz: 1024
+  epochs: 30       # upper bound; `time` decides the real number of epochs
+  batch: 8
+  close_mosaic: 5
+  time: 1.5        # hours: Ultralytics fits epochs + LR schedule into this budget (deadline safety)
+mini:
+  time: null       # no time cap on the CPU dry-run

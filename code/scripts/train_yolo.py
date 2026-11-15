@@ -104,7 +104,7 @@ def main():
         model = YOLO(ycfg["model"]["weights"])
         t0 = time.time()
         res = model.train(data=str(data_yaml), imgsz=tr["imgsz"], epochs=tr["epochs"], batch=tr["batch"],
-                          workers=tr["workers"], close_mosaic=tr["close_mosaic"], device=device,
+                          workers=tr["workers"], close_mosaic=tr["close_mosaic"], time=tr.get("time"),device=device,
                           seed=cfg["seed"], val=False, project=str(out), name="train", exist_ok=True)
         train_info = {"train_time_min": round((time.time() - t0) / 60, 1),
                       "ultralytics_val_mAP50_95": float(res.box.map) if res is not None else None}
