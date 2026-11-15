@@ -1,0 +1,92 @@
+[{"stream_name":"stdout","time":1.599686473,"data":"weights: /kaggle/input/hw2-weights/m2_yolo_base_last.pt\n"}
+,{"stream_name":"stderr","time":1.733981962,"data":"Cloning into '/tmp/repo'...\n"}
+,{"stream_name":"stdout","time":22.868730671,"data":"Creating new Ultralytics Settings v0.0.8 file ✅ \n"}
+,{"stream_name":"stdout","time":22.868769215,"data":"View Ultralytics Settings with 'yolo settings' or at '/root/.config/Ultralytics/settings.json'\n"}
+,{"stream_name":"stdout","time":22.868776881,"data":"Update Settings with 'yolo settings key=value', i.e. 'yolo settings runs_dir=path/to/dir'. For help see https://docs.ultralytics.com/usage/settings\n"}
+,{"stream_name":"stdout","time":23.414568306,"data":"data root: /kaggle/input/competitions/multiple-object-video-detection-hw-2-ucu-ai-2026\n"}
+,{"stream_name":"stdout","time":23.414620392,"data":"prepared: /kaggle/input/notebooks/bohdankolodchak/hw2-01-prepare/prepared\n"}
+,{"stream_name":"stdout","time":23.414626487,"data":"output: /kaggle/working/m2_yolo_base\n"}
+,{"stream_name":"stdout","time":23.414630815,"data":"device: 0\n"}
+,{"stream_name":"stdout","time":23.41463494,"data":"settings: {'imgsz': 1024, 'epochs': 10, 'batch': 8, 'workers': 4, 'close_mosaic': 2}\n"}
+,{"stream_name":"stdout","time":23.415062577,"data":"[mem] start: process 0.5 GB, available 32.1 / 33.7 GB\n"}
+,{"stream_name":"stdout","time":56.317470198,"data":"[mem] predict 500/2846 images: process 2.0 GB, available 30.9 / 33.7 GB\n"}
+,{"stream_name":"stdout","time":71.254937692,"data":"[mem] predict 1000/2846 images: process 2.0 GB, available 30.9 / 33.7 GB\n"}
+,{"stream_name":"stdout","time":85.107186371,"data":"[mem] predict 1500/2846 images: process 2.1 GB, available 30.7 / 33.7 GB\n"}
+,{"stream_name":"stdout","time":118.358663935,"data":"[mem] predict 2000/2846 images: process 2.1 GB, available 30.8 / 33.7 GB\n"}
+,{"stream_name":"stdout","time":144.307313479,"data":"[mem] predict 2500/2846 images: process 2.1 GB, available 30.9 / 33.7 GB\n"}
+,{"stream_name":"stdout","time":154.634478846,"data":"[mem] after val predict (642465 detections): process 2.4 GB, available 30.6 / 33.7 GB\n"}
+,{"stream_name":"stdout","time":395.41274078,"data":"creating index...\n"}
+,{"stream_name":"stdout","time":395.412825238,"data":"index created!\n"}
+,{"stream_name":"stdout","time":395.412834214,"data":"creating index...\n"}
+,{"stream_name":"stdout","time":395.412839379,"data":"index created!\n"}
+,{"stream_name":"stdout","time":395.412844625,"data":"Running per image evaluation...\n"}
+,{"stream_name":"stdout","time":395.412849262,"data":"Evaluate annotation type *bbox*\n"}
+,{"stream_name":"stdout","time":395.412853766,"data":"DONE (t=223.39s).\n"}
+,{"stream_name":"stdout","time":395.412858166,"data":"Accumulating evaluation results...\n"}
+,{"stream_name":"stdout","time":395.412862958,"data":"DONE (t=9.57s).\n"}
+,{"stream_name":"stdout","time":395.412867353,"data":" Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.186\n"}
+,{"stream_name":"stdout","time":395.412905882,"data":" Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=500 ] = 0.376\n"}
+,{"stream_name":"stdout","time":395.412912616,"data":" Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=500 ] = 0.162\n"}
+,{"stream_name":"stdout","time":395.412918734,"data":" Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=500 ] = 0.103\n"}
+,{"stream_name":"stdout","time":395.412924606,"data":" Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=500 ] = 0.183\n"}
+,{"stream_name":"stdout","time":395.412929266,"data":" Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=500 ] = 0.292\n"}
+,{"stream_name":"stdout","time":395.412934613,"data":" Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.081\n"}
+,{"stream_name":"stdout","time":395.412955163,"data":" Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.296\n"}
+,{"stream_name":"stdout","time":395.412960006,"data":" Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=500 ] = 0.298\n"}
+,{"stream_name":"stdout","time":395.412964325,"data":" Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=500 ] = 0.181\n"}
+,{"stream_name":"stdout","time":395.412968121,"data":" Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=500 ] = 0.287\n"}
+,{"stream_name":"stdout","time":395.412972044,"data":" Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=500 ] = 0.429\n"}
+,{"stream_name":"stdout","time":395.412975485,"data":"\n"}
+,{"stream_name":"stdout","time":395.412979531,"data":"[mem] after COCO eval: process 2.9 GB, available 30.0 / 33.7 GB\n"}
+,{"stream_name":"stdout","time":413.184744405,"data":"[mem] predict 500/3811 images: process 2.5 GB, available 30.5 / 33.7 GB\n"}
+,{"stream_name":"stdout","time":422.597028589,"data":"[mem] predict 1000/3811 images: process 2.5 GB, available 30.5 / 33.7 GB\n"}
+,{"stream_name":"stdout","time":431.044303123,"data":"[mem] predict 1500/3811 images: process 2.5 GB, available 30.5 / 33.7 GB\n"}
+,{"stream_name":"stdout","time":440.082340076,"data":"[mem] predict 2000/3811 images: process 2.5 GB, available 30.5 / 33.7 GB\n"}
+,{"stream_name":"stdout","time":449.266503275,"data":"[mem] predict 2500/3811 images: process 2.5 GB, available 30.5 / 33.7 GB\n"}
+,{"stream_name":"stdout","time":458.801688478,"data":"[mem] predict 3000/3811 images: process 2.5 GB, available 30.5 / 33.7 GB\n"}
+,{"stream_name":"stdout","time":468.139070354,"data":"[mem] predict 3500/3811 images: process 2.5 GB, available 30.5 / 33.7 GB\n"}
+,{"stream_name":"stdout","time":479.735423823,"data":"[mem] after test predict (1030210 detections): process 2.9 GB, available 30.1 / 33.7 GB\n"}
+,{"stream_name":"stdout","time":483.578524767,"data":"{\n"}
+,{"stream_name":"stdout","time":483.578579927,"data":"  \"exp\": \"m2_yolo_base\",\n"}
+,{"stream_name":"stdout","time":483.578607694,"data":"  \"weights\": \"yolo11s.pt\",\n"}
+,{"stream_name":"stdout","time":483.578612507,"data":"  \"checkpoint\": \"/kaggle/input/hw2-weights/m2_yolo_base_last.pt\",\n"}
+,{"stream_name":"stdout","time":483.578617952,"data":"  \"mini\": false,\n"}
+,{"stream_name":"stdout","time":483.578624448,"data":"  \"imgsz\": 1024,\n"}
+,{"stream_name":"stdout","time":483.578629249,"data":"  \"epochs\": 10,\n"}
+,{"stream_name":"stdout","time":483.57863331,"data":"  \"batch\": 8,\n"}
+,{"stream_name":"stdout","time":483.578637469,"data":"  \"workers\": 4,\n"}
+,{"stream_name":"stdout","time":483.578641712,"data":"  \"close_mosaic\": 2,\n"}
+,{"stream_name":"stdout","time":483.578645952,"data":"  \"val\": {\n"}
+,{"stream_name":"stdout","time":483.578649924,"data":"    \"mAP\": 0.18630876855861433,\n"}
+,{"stream_name":"stdout","time":483.578654682,"data":"    \"AP50\": 0.3764580186835442,\n"}
+,{"stream_name":"stdout","time":483.578659127,"data":"    \"AP75\": 0.16178180325452574,\n"}
+,{"stream_name":"stdout","time":483.578664865,"data":"    \"AP_small\": 0.10274481025449372,\n"}
+,{"stream_name":"stdout","time":483.578669497,"data":"    \"AP_medium\": 0.18298085907245712,\n"}
+,{"stream_name":"stdout","time":483.57867397,"data":"    \"AP_large\": 0.292089909280072,\n"}
+,{"stream_name":"stdout","time":483.57867855,"data":"    \"per_class_AP\": {\n"}
+,{"stream_name":"stdout","time":483.578683451,"data":"      \"person\": 0.2649442579877996,\n"}
+,{"stream_name":"stdout","time":483.578700502,"data":"      \"bicycle\": 0.20078519211137383,\n"}
+,{"stream_name":"stdout","time":483.578705054,"data":"      \"car\": 0.3714378707496745,\n"}
+,{"stream_name":"stdout","time":483.578708566,"data":"      \"van\": 0.15340545450660326,\n"}
+,{"stream_name":"stdout","time":483.578712314,"data":"      \"truck\": 0.18331673133702656,\n"}
+,{"stream_name":"stdout","time":483.578716254,"data":"      \"tricycle\": 0.1875300716894158,\n"}
+,{"stream_name":"stdout","time":483.578719865,"data":"      \"bus\": 0.010631372449293882,\n"}
+,{"stream_name":"stdout","time":483.578723576,"data":"      \"motor\": 0.11841919763772715\n"}
+,{"stream_name":"stdout","time":483.578727057,"data":"    }\n"}
+,{"stream_name":"stdout","time":483.57873014,"data":"  },\n"}
+,{"stream_name":"stdout","time":483.578733652,"data":"  \"val_images_per_s\": 22.6,\n"}
+,{"stream_name":"stdout","time":483.578737564,"data":"  \"n_val_images\": 2846,\n"}
+,{"stream_name":"stdout","time":483.578740815,"data":"  \"n_test_images_predicted\": 3811,\n"}
+,{"stream_name":"stdout","time":483.578744374,"data":"  \"submission\": {\n"}
+,{"stream_name":"stdout","time":483.578747734,"data":"    \"rows\": 3811,\n"}
+,{"stream_name":"stdout","time":483.578751107,"data":"    \"detections\": 1030210,\n"}
+,{"stream_name":"stdout","time":483.578754903,"data":"    \"empty_rows\": 0\n"}
+,{"stream_name":"stdout","time":483.578758109,"data":"  }\n"}
+,{"stream_name":"stdout","time":483.578761178,"data":"}\n"}
+,{"stream_name":"stderr","time":495.204358835,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":495.204400725,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":495.671152017,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":495.671209249,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":496.760232653,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":498.147907586,"data":"[NbConvertApp] Writing 277821 bytes to __results__.html\n"}
+]
