@@ -1,0 +1,28 @@
+0.8s 1 Cloning into '/tmp/repo'...
+7.2s 2 data root: /kaggle/input/competitions/multiple-object-video-detection-hw-2-ucu-ai-2026
+7.2s 3 output: /kaggle/working/prepared
+7.2s 4 frame_step: 10
+125.9s 5 train clips:   0%|          | 0/56 [00:00<?, ?it/s]train clips:   2%|▏         | 1/56 [00:01<00:59,  1.09s/it]train clips:   4%|▎         | 2/56 [00:01<00:31,  1.74it/s]train clips:   5%|▌         | 3/56 [00:01<00:26,  1.97it/s]train clips:   7%|▋         | 4/56 [00:03<00:52,  1.01s/it]train clips:   9%|▉         | 5/56 [00:04<00:49,  1.03it/s]train clips:  11%|█         | 6/56 [00:04<00:36,  1.37it/s]train clips:  12%|█▎        | 7/56 [00:05<00:37,  1.30it/s]train clips:  14%|█▍        | 8/56 [00:05<00:32,  1.49it/s]train clips:  16%|█▌        | 9/56 [00:07<00:39,  1.19it/s]train clips:  18%|█▊        | 10/56 [00:09<00:53,  1.16s/it]train clips:  20%|█▉        | 11/56 [00:10<01:02,  1.38s/it]train clips:  21%|██▏       | 12/56 [00:14<01:32,  2.10s/it]train clips:  23%|██▎       | 13/56 [00:17<01:43,  2.40s/it]train clips:  25%|██▌       | 14/56 [00:21<01:51,  2.66s/it]train clips:  27%|██▋       | 15/56 [00:22<01:36,  2.35s/it]train clips:  29%|██▊       | 16/56 [00:24<01:28,  2.21s/it]train clips:  30%|███       | 17/56 [00:26<01:26,  2.21s/it]train clips:  32%|███▏      | 18/56 [00:28<01:15,  1.99s/it]train clips:  34%|███▍      | 19/56 [00:30<01:18,  2.13s/it]train clips:  36%|███▌      | 20/56 [00:32<01:11,  1.97s/it]train clips:  38%|███▊      | 21/56 [00:34<01:08,  1.96s/it]train clips:  39%|███▉      | 22/56 [00:36<01:09,  2.03s/it]train clips:  41%|████      | 23/56 [00:37<01:00,  1.83s/it]train clips:  43%|████▎     | 24/56 [00:40<01:08,  2.15s/it]train clips:  45%|████▍     | 25/56 [00:45<01:30,  2.91s/it]train clips:  46%|████▋     | 26/56 [00:47<01:21,  2.71s/it]train clips:  48%|████▊     | 27/56 [00:50<01:22,  2.84s/it]train clips:  50%|█████     | 28/56 [00:53<01:22,  2.94s/it]train clips:  52%|█████▏    | 29/56 [00:58<01:30,  3.37s/it]train clips:  54%|█████▎    | 30/56 [00:59<01:09,  2.66s/it]train clips:  55%|█████▌    | 31/56 [01:02<01:08,  2.75s/it]train clips:  57%|█████▋    | 32/56 [01:06<01:14,  3.12s/it]train clips:  59%|█████▉    | 33/56 [01:13<01:38,  4.28s/it]train clips:  61%|██████    | 34/56 [01:16<01:25,  3.87s/it]train clips:  62%|██████▎   | 35/56 [01:18<01:12,  3.45s/it]train clips:  64%|██████▍   | 36/56 [01:24<01:22,  4.10s/it]train clips:  66%|██████▌   | 37/56 [01:26<01:06,  3.52s/it]train clips:  68%|██████▊   | 38/56 [01:27<00:49,  2.74s/it]train clips:  70%|██████▉   | 39/56 [01:30<00:46,  2.75s/it]train clips:  71%|███████▏  | 40/56 [01:33<00:45,  2.81s/it]train clips:  73%|███████▎  | 41/56 [01:35<00:39,  2.64s/it]train clips:  75%|███████▌  | 42/56 [01:36<00:28,  2.06s/it]train clips:  77%|███████▋  | 43/56 [01:36<00:22,  1.70s/it]train clips:  79%|███████▊  | 44/56 [01:38<00:19,  1.63s/it]train clips:  80%|████████  | 45/56 [01:41<00:22,  2.03s/it]train clips:  82%|████████▏ | 46/56 [01:42<00:17,  1.71s/it]train clips:  84%|████████▍ | 47/56 [01:44<00:16,  1.87s/it]train clips:  86%|████████▌ | 48/56 [01:45<00:13,  1.67s/it]train clips:  88%|████████▊ | 49/56 [01:46<00:10,  1.46s/it]train clips:  89%|████████▉ | 50/56 [01:47<00:08,  1.38s/it]train clips:  91%|█████████ | 51/56 [01:48<00:06,  1.29s/it]train clips:  93%|█████████▎| 52/56 [01:52<00:07,  1.91s/it]train clips:  95%|█████████▍| 53/56 [01:54<00:05,  1.90s/it]train clips:  96%|█████████▋| 54/56 [01:55<00:03,  1.66s/it]train clips:  98%|█████████▊| 55/56 [01:57<00:01,  1.70s/it]train clips: 100%|██████████| 56/56 [01:58<00:00,  1.67s/it]train clips: 100%|██████████| 56/56 [01:58<00:00,  2.12s/it]
+185.3s 6 val clips:   0%|          | 0/7 [00:00<?, ?it/s]val clips:  14%|█▍        | 1/7 [00:09<00:56,  9.44s/it]val clips:  29%|██▊       | 2/7 [00:20<00:51, 10.29s/it]val clips:  43%|████▎     | 3/7 [00:26<00:34,  8.54s/it]val clips:  57%|█████▋    | 4/7 [00:35<00:25,  8.46s/it]val clips:  71%|███████▏  | 5/7 [00:50<00:21, 10.97s/it]val clips:  86%|████████▌ | 6/7 [00:53<00:08,  8.12s/it]val clips: 100%|██████████| 7/7 [00:59<00:00,  7.52s/it]val clips: 100%|██████████| 7/7 [00:59<00:00,  8.49s/it]
+192.3s 7 {
+192.3s 8 "train_frames": 2446,
+192.3s 9 "frames_masked": 1832,
+192.3s 10 "boxes_kept": 110858,
+192.3s 11 "boxes_dropped_in_ignore": 1406,
+192.3s 12 "train_coco_objects": 110858,
+192.3s 13 "train_coco_crowd": 52168,
+192.3s 14 "val_coco_objects": 114132,
+192.3s 15 "val_coco_crowd": 31960,
+192.3s 16 "frame_step": 10,
+192.3s 17 "val_frames": 2846,
+192.3s 18 "data_root": "/kaggle/input/competitions/multiple-object-video-detection-hw-2-ucu-ai-2026"
+192.3s 19 }
+194.0s 20 val objects  ours / organisers: 114132 / 114132
+194.0s 21 val crowd    ours / organisers: 31960 / 31960
+194.0s 22 val images   ours / organisers: 2846 / 2846
+197.2s 23 /usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\|'
+197.2s 24 cells[i][c] = re.sub('\\\\\|', '|', cell)
+197.6s 25 /usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\_'
+197.6s 26 text = re.sub(r'_', '\_', text) # Escape underscores in display text
+198.7s 27 [NbConvertApp] Converting notebook __script__.ipynb to html
+200.0s 28 [NbConvertApp] Writing 278772 bytes to __results__.html

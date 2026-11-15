@@ -1,0 +1,13 @@
+{
+  "train_frames": 2446,
+  "frames_masked": 1832,
+  "boxes_kept": 110858,
+  "boxes_dropped_in_ignore": 1406,
+  "train_coco_objects": 110858,
+  "train_coco_crowd": 52168,
+  "val_coco_objects": 114132,
+  "val_coco_crowd": 31960,
+  "frame_step": 10,
+  "val_frames": 2846,
+  "data_root": "/kaggle/input/competitions/multiple-object-video-detection-hw-2-ucu-ai-2026"
+}
