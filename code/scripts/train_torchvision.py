@@ -92,6 +92,7 @@ def main():
     ap.add_argument("--config", required=True)
     ap.add_argument("--mini", action="store_true")
     ap.add_argument("--test", action="store_true", help="also predict test and write submission.csv")
+    ap.add_argument("--skip-val", action="store_true", help="no val eval (test inference only)")
     ap.add_argument("--weights", default=None, help="skip training; load this state_dict")
     ap.add_argument("--prepared", default=None)
     args = ap.parse_args()
@@ -121,10 +122,12 @@ def main():
     # ---- val: our COCO evaluator + failure cases
     gt = json.load(open(prepared / "annotations/val_coco.json"))
     val_paths = [root / cfg["val_split"] / im["file_name"] for im in gt["images"]]
-    val_preds, val_fps = predict(model, val_paths, [im["id"] for im in gt["images"]], device)
-    json.dump(val_preds, open(out / "val_preds.json", "w"))
-    metrics = coco_evaluate(gt, val_preds, max_dets=cfg["eval"]["max_dets"], verbose=True)
-    failures = save_failure_cases(gt, val_preds, root / cfg["val_split"], out / "failures")
+    metrics, val_fps, failures = None, None, []
+    if not args.skip_val:
+        val_preds, val_fps = predict(model, val_paths, [im["id"] for im in gt["images"]], device)
+        json.dump(val_preds, open(out / "val_preds.json", "w"))
+        metrics = coco_evaluate(gt, val_preds, max_dets=cfg["eval"]["max_dets"], verbose=True)
+        failures = save_failure_cases(gt, val_preds, root / cfg["val_split"], out / "failures")
 
     sub_stats = None
     if args.test:
@@ -135,7 +138,7 @@ def main():
         sub_stats = check_submission(out / "submission.csv", test_csv)
 
     summary = {"exp": args.exp, "config": args.config, "model": mcfg["model"], "mini": args.mini, **tr,
-               "train_log": train_log, "val": metrics, "val_images_per_s": round(val_fps, 1),
+               "train_log": train_log, "val": metrics, "val_images_per_s": val_fps and round(val_fps, 1),
                "n_val_images": len(val_paths), "failure_cases": failures, "submission": sub_stats}
     (out / "metrics.json").write_text(json.dumps(summary, indent=2))
     print(json.dumps({k: v for k, v in summary.items() if k != "train_log"}, indent=2))
