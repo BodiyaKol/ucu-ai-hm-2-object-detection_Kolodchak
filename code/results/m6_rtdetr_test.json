@@ -1,0 +1,38 @@
+{
+  "exp": "m6_rtdetr",
+  "weights": "rtdetr-l.pt",
+  "checkpoint": "/kaggle/input/notebooks/bohdankolodchak/hw2-06-rtdetr/m6_rtdetr/train/weights/last.pt",
+  "mini": false,
+  "imgsz": 1024,
+  "epochs": 20,
+  "batch": 4,
+  "workers": 4,
+  "close_mosaic": 2,
+  "time": 0.75,
+  "val": {
+    "mAP": 0.252139618780529,
+    "AP50": 0.49299597027953695,
+    "AP75": 0.2252048011792576,
+    "AP_small": 0.13922902702129716,
+    "AP_medium": 0.22561363615755062,
+    "AP_large": 0.4245121946949117,
+    "per_class_AP": {
+      "person": 0.3030343899286921,
+      "bicycle": 0.2562607284535187,
+      "car": 0.42594764445470273,
+      "van": 0.25701104293802224,
+      "truck": 0.22596722416664233,
+      "tricycle": 0.2404084523486485,
+      "bus": 0.1724363634900532,
+      "motor": 0.13605110446395208
+    }
+  },
+  "val_images_per_s": 14.1,
+  "n_val_images": 2846,
+  "n_test_images_predicted": 3811,
+  "submission": {
+    "rows": 3811,
+    "detections": 1143300,
+    "empty_rows": 0
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "exp": "m7_m1024",
+  "weights": "yolo11m.pt",
+  "checkpoint": "/kaggle/working/m7_m1024/train/weights/last.pt",
+  "mini": false,
+  "imgsz": 1024,
+  "epochs": 30,
+  "batch": 8,
+  "workers": 4,
+  "close_mosaic": 5,
+  "time": 1.5,
+  "train_time_min": 95.3,
+  "ultralytics_val_mAP50_95": 0.18607934025086054,
+  "val": {
+    "mAP": 0.17706399719718366,
+    "AP50": 0.34970933029751267,
+    "AP75": 0.15498183376136962,
+    "AP_small": 0.10790315889025119,
+    "AP_medium": 0.1720411690012059,
+    "AP_large": 0.2861122497312007,
+    "per_class_AP": {
+      "person": 0.26418466884147856,
+      "bicycle": 0.15733299256101477,
+      "car": 0.37009226739739576,
+      "van": 0.14753652096975245,
+      "truck": 0.1523917142970893,
+      "tricycle": 0.16890548911732337,
+      "bus": 0.045156462503331225,
+      "motor": 0.11091186189008376
+    }
+  },
+  "val_images_per_s": 38.6,
+  "n_val_images": 2846,
+  "n_test_images_predicted": 3811,
+  "submission": {
+    "rows": 3811,
+    "detections": 781244,
+    "empty_rows": 0
+  }
+}

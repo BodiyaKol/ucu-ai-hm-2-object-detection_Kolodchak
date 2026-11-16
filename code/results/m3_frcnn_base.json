@@ -1,0 +1,84 @@
+{
+  "exp": "m3_frcnn_base",
+  "config": "configs/faster_rcnn/base.yaml",
+  "model": {
+    "name": "faster_rcnn",
+    "anchor_sizes": [
+      32,
+      64,
+      128,
+      256,
+      512
+    ],
+    "rpn_post_nms_top_n": 1000,
+    "box_batch_size_per_image": 512
+  },
+  "mini": false,
+  "imgsz": 1024,
+  "batch": 4,
+  "workers": 4,
+  "lr": 0.005,
+  "epochs": 12,
+  "max_minutes": 25,
+  "train_log": [
+    {
+      "epoch": 1,
+      "iters": 612,
+      "loss": 1.1738,
+      "minutes": 5.4
+    },
+    {
+      "epoch": 2,
+      "iters": 1224,
+      "loss": 0.8416,
+      "minutes": 10.7
+    },
+    {
+      "epoch": 3,
+      "iters": 1836,
+      "loss": 0.7641,
+      "minutes": 16.1
+    },
+    {
+      "epoch": 4,
+      "iters": 2448,
+      "loss": 0.7151,
+      "minutes": 21.4
+    },
+    {
+      "epoch": 5,
+      "iters": 2856,
+      "loss": 0.7016,
+      "minutes": 25.0
+    }
+  ],
+  "val": {
+    "mAP": 0.21189960694633497,
+    "AP50": 0.42673270955310144,
+    "AP75": 0.1843699346306448,
+    "AP_small": 0.0918485133330662,
+    "AP_medium": 0.1946846654557955,
+    "AP_large": 0.3877789421164471,
+    "per_class_AP": {
+      "person": 0.26281128111237295,
+      "bicycle": 0.22732670935805666,
+      "car": 0.3787951020036646,
+      "van": 0.21991972346358243,
+      "truck": 0.25935699056333295,
+      "tricycle": 0.19456924532533684,
+      "bus": 0.04220708835893799,
+      "motor": 0.11021071538539559
+    }
+  },
+  "val_images_per_s": 6.5,
+  "n_val_images": 2846,
+  "failure_cases": [
+    "uav0000268_05773_v_0000322_r0.19.jpg",
+    "uav0000117_02622_v_0000200_r0.32.jpg",
+    "uav0000182_00000_v_0000358_r0.36.jpg",
+    "uav0000117_02622_v_0000304_r0.38.jpg",
+    "uav0000117_02622_v_0000124_r0.39.jpg",
+    "uav0000182_00000_v_0000357_r0.39.jpg"
+  ],
+  "submission": null
+}
