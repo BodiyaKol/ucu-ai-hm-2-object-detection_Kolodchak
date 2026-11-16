@@ -56,7 +56,6 @@ code/
 | `eval/coco_eval.py` | `coco_evaluate(gt, preds)`: mAP, AP50, AP75, AP_small/medium/large, per-class AP, **all at 500 detections** |
 | `submission.py` | `predictions_to_csv`, `check_submission` (top-left xywh, 0-based class ids, ≤ 500 per image) |
 | `viz.py` | `draw_boxes`, `save_failure_cases` (lowest-recall val frames) |
-| `inference/` | `sahi_tiles.py`, `wbf.py`, `temporal.py`: stubs, not used (see report, section 7) |
 
 Prediction format inside the code: COCO results `{"image_id", "category_id" (1..8), "bbox" [x, y, w, h], "score"}`.
 `to_coco_results` in `eval/coco_eval.py` converts model outputs (pixel xyxy, classes 0..7) into it.
