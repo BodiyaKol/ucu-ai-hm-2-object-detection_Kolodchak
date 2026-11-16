@@ -16,7 +16,8 @@ def main():
     parser.add_argument("--out", required=True)
     args = parser.parse_args()
 
-    metrics = coco_evaluate(args.gt, args.pred, verbose=True)    with open(args.out, "w") as fh:
+    metrics = coco_evaluate(args.gt, args.pred, verbose=True)
+    with open(args.out, "w") as fh:
         json.dump(metrics, fh, indent=2)
     print(json.dumps(metrics, indent=2))
 
