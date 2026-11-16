@@ -43,7 +43,7 @@ def find_prepared(arg) -> Path:
             hits = sorted(KAGGLE_INPUT.glob(pattern))
             if hits:
                 return hits[0].parent
-        raise FileNotFoundError("prepared/train.txt not found under /kaggle/input (attach hw2-01-prepare)")
+        # not attached (e.g. Colab with an empty /kaggle/input): fall back to the local folder
     prepared = CODE_DIR / "outputs/prepared"
     if not (prepared / "train.txt").exists():
         raise FileNotFoundError("run `python scripts/prepare_data.py` first")

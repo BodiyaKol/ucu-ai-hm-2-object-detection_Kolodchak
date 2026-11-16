@@ -70,7 +70,7 @@ def get_data_root(cfg: dict) -> Path:
             hits = sorted(KAGGLE_INPUT.glob(pattern))
             if hits:
                 return hits[0].parent
-        raise FileNotFoundError("Competition data not found under /kaggle/input")
+        # /kaggle/input exists but is empty (e.g. Colab): fall back to the local dataset
 
     root = CODE_DIR / cfg["data_dirs"][cfg["local_dataset"]]
     if not root.exists():
