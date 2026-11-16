@@ -7,7 +7,8 @@ top-500 detections, score ≥ 0.001, batch-1 inference. Full metrics per run: `r
 
 | id | model / change | imgsz | epochs | val mAP | AP50 | AP_small | public LB | GPU time (T4) | notes |
 |---|---|---|---|---|---|---|---|---|---|
-| m2_yolo_base | YOLO11s (COCO-pretrained), Ultralytics defaults, close_mosaic 2 | 1024 | 10 | 0.186 | 0.376 | 0.103 | 0.2121 | 15 min train + 8 min infer | Organisers' baseline.csv on LB ≈ 0.2216 (not beaten yet). Ultralytics val (multi-label NMS, no ignore) 0.198. Bus AP 0.011 (Ultralytics 0.063). LB > val: test frames are downscaled less at 1024 (median 1360 vs 1904 px). |
+| m2_yolo_base | YOLO11s (COCO-pretrained), Ultralytics defaults, close_mosaic 2 | 1024 | 10 | 0.186 | 0.376 | 0.103 | 0.2121 | 15 min train + 8 min infer | Organisers' baseline.csv on LB ≈ 0.2216 (not beaten). Ultralytics val (multi-label NMS, no ignore) 0.198. Bus AP 0.011 (Ultralytics 0.063). LB > val: test frames are downscaled less at 1024 (median 1360 vs 1904 px). |
+| m7_s1280 (FINAL) | YOLO11s, imgsz 1280, time-capped 1.5 h training (Ultralytics fits epochs), close_mosaic 5 | 1280 | 37 (time-capped, of 40) | 0.185 | 0.374 | 0.102 | 0.2873 | 1.5 h train + inference | Final submission. Beats baseline.csv ≈ 0.2216. Targets the measured weaknesses: small objects (more pixels per object) and undertraining. **Val did not improve vs m2_yolo_base (0.185 vs 0.186, AP_small 0.102 vs 0.103) while LB rose +0.075: to be explained.** Ultralytics val 0.188. B (YOLO11m @1024) stayed in the Kaggle queue, not used. |
 
 ## Protocol decisions (M1.4)
 
