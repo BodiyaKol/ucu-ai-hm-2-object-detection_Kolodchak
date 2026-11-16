@@ -1,0 +1,13 @@
+{
+  "id": "bohdankolodchak/hw2-06-rtdetr",
+  "title": "hw2-06-rtdetr",
+  "code_file": "run.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "competition_sources": ["multiple-object-video-detection-hw-2-ucu-ai-2026"],
+  "dataset_sources": [],
+  "kernel_sources": ["bohdankolodchak/hw2-01-prepare"]
+}

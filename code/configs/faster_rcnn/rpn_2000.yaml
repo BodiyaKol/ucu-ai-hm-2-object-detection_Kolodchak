@@ -1,6 +1,4 @@
-# experiment: faster_rcnn/rpn_2000
-base: base.yaml
-# TODO: describe what is changed vs base
+# experiment: faster_rcnn/rpn_2000 — small anchors + 2x proposals (frames have up to 180 objects; default 1000)
+base: small_anchors.yaml
 model:
-  rpn_post_nms_top_n_train: 2000
-  rpn_post_nms_top_n_test: 2000
+  rpn_post_nms_top_n: 2000

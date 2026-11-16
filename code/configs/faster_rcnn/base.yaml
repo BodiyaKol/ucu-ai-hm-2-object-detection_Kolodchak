@@ -1,12 +1,19 @@
-# experiment: faster_rcnn/base
+# experiment: faster_rcnn/base — torchvision defaults (M3 reference run)
 model:
-  name: fasterrcnn_resnet50_fpn_v2
-  pretrained: true
-  rpn_post_nms_top_n_train: 2000
-  box_batch_size_per_image: 512
-
-optim:
-  name: sgd
-  lr: 0.01
-  momentum: 0.9
-  weight_decay: 0.0001
+  name: faster_rcnn
+  anchor_sizes: [32, 64, 128, 256, 512]   # default: one size per FPN level P2..P6 (69% of our boxes are < 32 px!)
+  rpn_post_nms_top_n: 1000                 # proposals kept per image after RPN NMS (train and test)
+  box_batch_size_per_image: 512            # RoIs sampled per image for the 2nd-stage loss (25% positives)
+train:
+  imgsz: 1024
+  batch: 4
+  workers: 4
+  lr: 0.005          # torchvision reference 0.02 @ batch 16 -> scaled to batch 4
+  epochs: 12
+  max_minutes: 25    # time cap: cosine LR schedule is fitted to this budget
+mini:
+  imgsz: 320
+  batch: 2
+  workers: 0
+  epochs: 1
+  max_minutes: 1

@@ -34,6 +34,10 @@ def test_nested_merge(tmp_path):
 
 def test_experiment_configs_inherit_base():
     # every child config must keep the model fields of its base.yaml
-    for child in ("faster_rcnn/giou.yaml", "retinanet/focal_g3.yaml", "yolo/img1280.yaml"):
+    for child in ("faster_rcnn/small_anchors.yaml", "faster_rcnn/rpn_2000.yaml", "yolo/img1280.yaml"):
         cfg = load_config(f"configs/{child}")
         assert "name" in cfg["model"] or "weights" in cfg["model"], child
+    # two-level chain: rpn_2000 -> small_anchors -> base
+    cfg = load_config("configs/faster_rcnn/rpn_2000.yaml")
+    assert cfg["model"]["anchor_sizes"] == [8, 16, 32, 64, 128] and cfg["model"]["rpn_post_nms_top_n"] == 2000
+    assert cfg["train"]["max_minutes"] == 25

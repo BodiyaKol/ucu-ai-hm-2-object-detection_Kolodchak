@@ -1,6 +1,0 @@
-# experiment: retinanet/kmeans_anchors
-base: base.yaml
-# TODO: paste anchor sizes / ratios from M1 k-means
-model:
-  anchor_sizes: []
-  aspect_ratios: []

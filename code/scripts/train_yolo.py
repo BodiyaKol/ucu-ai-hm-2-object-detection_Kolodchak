@@ -84,12 +84,14 @@ def main():
     ap.add_argument("--prepared", default=None)
     ap.add_argument("--train-only", action="store_true", help="train and stop (inference in a fresh process)")
     ap.add_argument("--weights", default=None, help="skip training; run inference with these weights")
+    ap.add_argument("--skip-test", action="store_true", help="val only (no submission)")
     args = ap.parse_args()
 
     import torch
-    from ultralytics import YOLO
+    from ultralytics import RTDETR, YOLO
 
     cfg, ycfg = load_config("configs/protocol.yaml"), load_config(args.config)
+    Model = RTDETR if "rtdetr" in ycfg["model"]["weights"].lower() else YOLO
     set_seed(cfg["seed"])
     tr = {**ycfg["train"], **(ycfg["mini"] if args.mini else {})}
     device = 0 if torch.cuda.is_available() and not args.mini else "cpu"
@@ -101,10 +103,10 @@ def main():
     train_info_path = out / "train_info.json"
     if args.weights is None:
         data_yaml = write_data_yaml(prepared, root, out, cfg["class_names"], cfg["val_frame_step"])
-        model = YOLO(ycfg["model"]["weights"])
+        model = Model(ycfg["model"]["weights"])
         t0 = time.time()
         res = model.train(data=str(data_yaml), imgsz=tr["imgsz"], epochs=tr["epochs"], batch=tr["batch"],
-                          workers=tr["workers"], close_mosaic=tr["close_mosaic"], time=tr.get("time"),device=device,
+                          workers=tr["workers"], close_mosaic=tr["close_mosaic"], time=tr.get("time"), device=device,
                           seed=cfg["seed"], val=False, project=str(out), name="train", exist_ok=True)
         train_info = {"train_time_min": round((time.time() - t0) / 60, 1),
                       "ultralytics_val_mAP50_95": float(res.box.map) if res is not None else None}
@@ -119,7 +121,7 @@ def main():
         weights = Path(args.weights)
     train_info = json.loads(train_info_path.read_text()) if train_info_path.exists() else {}
 
-    model = YOLO(weights)
+    model = Model(weights)
     kw = dict(imgsz=tr["imgsz"], conf=cfg["eval"]["score_thresh"], max_det=cfg["eval"]["max_dets"],
               device=device)
     if device != "cpu":
@@ -136,17 +138,18 @@ def main():
     del val_preds, gt
     gc.collect()
 
-    # ---- test: submission for every image of test_images.csv
-    test_csv = root / "test_images.csv"
-    rows = list(csv.DictReader(open(test_csv)))
-    rows = [r for r in rows if (root / r["file_name"]).exists()]  # mini has only a few test clips
-    if is_kaggle():
-        assert len(rows) == 3811, f"expected 3811 test images, found {len(rows)}"
-    test_preds, _ = predict(model, [root / r["file_name"] for r in rows], [r["image_id"] for r in rows],
-                            out / "test_list.txt", **kw)
-    log_mem(f"after test predict ({len(test_preds)} detections)")
-    predictions_to_csv(test_preds, test_csv, out / "submission.csv")
-    sub_stats = check_submission(out / "submission.csv", test_csv)
+    # ---- test: submission for every image of test_images.csv (skipped for val-only experiments)
+    rows, sub_stats = [], None
+    if not args.skip_test:
+        test_csv = root / "test_images.csv"
+        rows = [r for r in csv.DictReader(open(test_csv)) if (root / r["file_name"]).exists()]
+        if is_kaggle():
+            assert len(rows) == 3811, f"expected 3811 test images, found {len(rows)}"
+        test_preds, _ = predict(model, [root / r["file_name"] for r in rows], [r["image_id"] for r in rows],
+                                out / "test_list.txt", **kw)
+        log_mem(f"after test predict ({len(test_preds)} detections)")
+        predictions_to_csv(test_preds, test_csv, out / "submission.csv")
+        sub_stats = check_submission(out / "submission.csv", test_csv)
 
     summary = {"exp": args.exp, "weights": ycfg["model"]["weights"], "checkpoint": str(weights),
                "mini": args.mini, **tr, **train_info,

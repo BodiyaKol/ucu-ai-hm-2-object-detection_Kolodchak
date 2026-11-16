@@ -1,7 +1,16 @@
-# experiment: rtdetr/base
+# experiment: rtdetr/base — M6: query-based (RT-DETR-L, 300 queries, COCO-pretrained), no NMS
 model:
   weights: rtdetr-l.pt
-  num_queries: 300
-
-optim:
-  backbone_lr_mult: 0.1   # TODO
+train:
+  imgsz: 1024
+  epochs: 20
+  batch: 4
+  workers: 4
+  close_mosaic: 2
+  time: 0.75       # hours (time cap)
+mini:
+  imgsz: 320
+  epochs: 1
+  batch: 2
+  workers: 0
+  time: null

@@ -1,4 +1,0 @@
-# experiment: retinanet/focal_g3
-base: base.yaml
-model:
-  focal_gamma: 3.0
