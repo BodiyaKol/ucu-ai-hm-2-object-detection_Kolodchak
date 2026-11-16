@@ -243,6 +243,9 @@ RT-DETR виявився найкращою моделлю за всіма тр�
 
 ## 8. Final model and run instructions
 
+- **Код (GitHub):** https://github.com/BodiyaKol/ucu-ai-hm-2-object-detection_Kolodchak (усе в папці `code/`, інструкції - [`code/README.md`](https://github.com/BodiyaKol/ucu-ai-hm-2-object-detection_Kolodchak/blob/main/code/README.md))
+- **Запустити самостійно в Google Colab:** [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/BodiyaKol/ucu-ai-hm-2-object-detection_Kolodchak/blob/main/code/notebooks/final_rtdetr_walkthrough.ipynb) - ноутбук `final_rtdetr_walkthrough.ipynb` відкривається прямо з репозиторію, достатньо Runtime -> Run all.
+
 Обрана модель - RT-DETR-L (`configs/rtdetr/base.yaml`, ваги COCO `rtdetr-l.pt`, imgsz 1024, 300 запитів, 45 хв на T4), val mAP 0.252, LB 0.340 public / 0.270 private. Фінальний сабміт до дедлайну був YOLO11s на 1280 (`configs/yolo/final_s1280.yaml`), бо RT-DETR не встиг.
 
 Покроковий ноутбук `code/notebooks/final_rtdetr_walkthrough.ipynb` проходить увесь пайплайн на mini-датасеті (CPU, ~5 хв): клонує репо, ставить `code/requirements.txt`, запускає `scripts/prepare_data.py`, показує конфіги, запускає `scripts/train_yolo.py --mini --config configs/rtdetr/base.yaml` (train -> val COCO eval -> submission.csv + перевірка формату) і в кінці дає команди для Kaggle. Повний прогін - kernel `notebooks/06_rtdetr/` (`kaggle kernels push -p notebooks/06_rtdetr --accelerator NvidiaTeslaT4`), інференс із збережених ваг - `notebooks/08b_late_rtdetr/`. Seed 42 скрізь, `deterministic=True`, інференс покадровий. Результати всіх прогонів лежать у `code/results/*.json` і `code/experiments.md`; інструкції з запуску - у `code/README.md`.
