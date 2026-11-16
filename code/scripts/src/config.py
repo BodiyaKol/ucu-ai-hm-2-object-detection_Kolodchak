@@ -16,8 +16,8 @@ KAGGLE_WORKING = Path("/kaggle/working")
 
 
 def is_kaggle() -> bool:
-    """True when running inside a Kaggle kernel."""
-    return KAGGLE_INPUT.exists()
+    """True when running inside a Kaggle kernel (Colab also has an EMPTY /kaggle/input)."""
+    return KAGGLE_INPUT.exists() and any(KAGGLE_INPUT.iterdir())
 
 
 def _deep_merge(base: dict, override: dict) -> dict:
